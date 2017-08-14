@@ -287,6 +287,16 @@ class ValidateLink{
       valid = false;
     }
 
+    if(this.repeatedUrl()){
+      this.urlErrorElem.innerHTML = "* URL is duplicated";
+      valid = false;
+    }
+
+    if(valid){
+      this.nameErrorElem.innerHTML = "*";
+      this.urlErrorElem.innerHTML = "*";
+    }
+
     return valid;
   }
   /*
@@ -296,6 +306,18 @@ class ValidateLink{
     let expression = /[-a-zA-Z0-9@:%_\+.~#?&//=]{2,256}\.[a-z]{2,4}\b(\/[-a-zA-Z0-9@:%_\+.~#?&//=]*)?/gi;
     var regex = new RegExp(expression);
     return (this.url.match(regex))
+  }
+  /*
+  * -Check there is any repeated URL
+  */
+  repeatedUrl(){
+    let link = this.list.listContent.links;
+    for(let i = 0; i < link.length; i++){
+      if(this.url === link[i].url){
+        return true;
+      }
+    }
+    return false;
   }
 
   /*
